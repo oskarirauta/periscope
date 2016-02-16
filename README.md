@@ -29,6 +29,11 @@ or
 ```
 Pass either a filename or path containing filename as argument to search and download subtitles to path where periscope was executed from.
 
+Requirements
+============
+ - Beautifulsoup4 python module
+ - unrar executable in system path (for rar support, subfinland uses rar)
+
 Troubleshooting
 ============
 If you do as explained in the examples, notice that file /videos/Arrow.S04E05.HDTV.x264-LOL.mp4 must exist, but it doesn't need to be the actual video file, it is enough to use touch so that filename exists.
