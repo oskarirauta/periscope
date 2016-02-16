@@ -40,7 +40,7 @@ import plugins
 import locale
 
 SUPPORTED_FORMATS = 'video/x-msvideo', 'video/quicktime', 'video/x-matroska', 'video/mp4'
-VERSION = 'dev'
+VERSION = 'subsearch'
 
 class Periscope:
     ''' Main Periscope class'''
