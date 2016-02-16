@@ -17,13 +17,17 @@ Execute periscope.py from folder where you want your subtitle file to be downloa
 
 Examples
 ============
-# cd /subtitles
-# /path/to/periscope.py /videos/Arrow.S04E05.HDTV.x264-LOL.mp4
-
+Usage examples:
+```
+#cd /subtitles
+#/path/to/periscope.py /videos/Arrow.S04E05.HDTV.x264-LOL.mp4
+```
 or 
-
-# cd /subtitles
-# /path/to/periscope.py /videos
+```
+#cd /subtitles
+#/path/to/periscope.py /videos
+```
+Pass either a filename or path containing filename as argument to search and download subtitles to path where periscope was executed from.
 
 Troubleshooting
 ============
