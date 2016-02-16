@@ -17,22 +17,4 @@
 #    along with emesene; if not, write to the Free Software
 #    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-from OpenSubtitles import OpenSubtitles
-from Subtitulos import Subtitulos
-from Podnapisi import Podnapisi
-from TheSubDB import TheSubDB
-from SubsWiki import SubsWiki
-from LegendasTV import LegendasTV
-from SubDivX import SubDivX
-
-#from SubtitleSource import SubtitleSource # require a key in the config file
-
-# Not working anymore (download fails)
-#from SubScene import SubScene
-
-# Don't want to be included
-#from Addic7ed import Addic7ed
-#from TvSubtitles import TvSubtitles
-
-# API not working
-#from Podnapisi2 import Podnapisi
+from Subsearch import Subsearch
