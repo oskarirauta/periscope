@@ -210,12 +210,9 @@ class Subsearch(SubtitleDatabase.SubtitleDB):
 		# Strip year from release name
 		newtoken = re.sub(r"\b[0-9]{4}[\.]{1}\b", "", token).rstrip()
 		
-<<<<<<< HEAD
 		if sum(c.isdigit() for c in newtoken) == 0:
 			newtoken = token
 
-=======
->>>>>>> FETCH_HEAD
 		# Strip [eztv] and similar unnecessary parts of release name
 		if newtoken.endswith("]"):
 			newtoken = newtoken.rsplit("[", 1)[0]
