@@ -1,5 +1,5 @@
 periscope
 ============
-Python module to search and download subtitles
+Fork of periscope used for downloading subtitles for given video file(s) from SubHeaven.org or SubFinland.org through Subsearch.org's search engine
 
-* [Project page](http://code.google.com/p/periscope/)
+* [Project page for original periscope](http://code.google.com/p/periscope/)
