@@ -207,7 +207,12 @@ class Subsearch(SubtitleDatabase.SubtitleDB):
 		''' makes a query on subscene and returns info (link, lang) about found subtitles'''
 		sublinks = []
 
+		# Strip year from release name
 		newtoken = re.sub(r"\b[0-9]{4}[\.]{1}\b", "", token).rstrip()
+		
+		# Strip [eztv] and similar unnecessary parts of release name
+		if newtoken.endswith("]"):
+			newtoken = newtoken.rsplit("[", 1)[0]
 
 		searchurl = "%s/search/%s/fi/4/0/0" %(self.host, urllib.quote(newtoken))
 		logging.debug("dl'ing %s" %searchurl)
