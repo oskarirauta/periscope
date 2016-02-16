@@ -207,13 +207,66 @@ class Subsearch(SubtitleDatabase.SubtitleDB):
 		''' makes a query on subscene and returns info (link, lang) about found subtitles'''
 		sublinks = []
 
+		# Strip year from release name
 		newtoken = re.sub(r"\b[0-9]{4}[\.]{1}\b", "", token).rstrip()
+		
+		if sum(c.isdigit() for c in newtoken) == 0:
+			newtoken = token
+
+		# Strip [eztv] and similar unnecessary parts of release name
+		if newtoken.endswith("]"):
+			newtoken = newtoken.rsplit("[", 1)[0]
 
 		searchurl = "%s/search/%s/fi/4/0/0" %(self.host, urllib.quote(newtoken))
 		logging.debug("dl'ing %s" %searchurl)
 		page = urllib2.urlopen(searchurl)
-		
+
 		soup = BeautifulSoup(page, "html.parser")
+
+		if len(soup("tr", {"style":"border: 3px double #ddd;background:#fffef9;height:35px;"})) == 0:
+			logging.debug("No subtitles found - Trying alternative naming")
+			dot_count = len(re.findall(".", newtoken))
+			if dot_count > 1:
+				alt_rels = []
+				filename_leftover = newtoken.rsplit(".", 1)[0]
+				alt_rel_number = filename_leftover.rsplit(".", 1)[1]
+				alt_rel_seriename = filename_leftover.rsplit(".", 1)[0].replace(".", " ")
+				alt_rel_src = newtoken.rsplit(".", 1)[1]
+				alt_rel_season = "S"
+				alt_rel_episode = "E"
+				if len(re.findall("-", alt_rel_src)) == 0:
+					alt_rels.append(alt_rel_src)
+				else:
+					alt_rels.append(alt_rel_src.rsplit("-", 1)[0])
+					alt_rels.append(alt_rel_src.rsplit("-", 1)[1])
+				if len(alt_rel_number) == 3:
+					alt_rel_season = ''.join(['S0', alt_rel_number[0]])
+					alt_rel_episode = ''.join(['E', alt_rel_number[1:3]])
+				elif len(alt_rel_number) == 4:
+					alt_rel_season = ''.join(['S', alt_rel_number[0:2]])
+					alt_rel_episode = ''.join(['E', alt_rel_number[2:4]])
+				else:
+					logging.debug("Alternative naming failed.")
+					return []
+
+				newtoken = ''.join([alt_rel_seriename.title(), '.'])
+				newtoken = ''.join([newtoken, alt_rel_season, alt_rel_episode])
+
+				alt_rel_index = 0
+				for alt_rel in alt_rels:
+					alt_rel_index = alt_rel_index + 1
+					if len(alt_rels) > 1 and alt_rel_index == len(alt_rels):
+						newtoken = ''.join([newtoken, '.x264-', alt_rel.upper()])
+					else:
+						newtoken = ''.join([newtoken, '.', alt_rel.upper()])
+
+				logging.debug("Generated alternative name: %s" %newtoken)
+
+				searchurl = "%s/search/%s/fi/4/0/0" %(self.host, urllib.quote(newtoken))
+				logging.debug("dl'ing %s" %searchurl)
+				page = urllib2.urlopen(searchurl)
+				soup = BeautifulSoup(page, "html.parser")
+
 		for subs in soup("tr", {"style":"border: 3px double #ddd;background:#fffef9;height:35px;"}):
 			sublink = subs.find("a")
 
