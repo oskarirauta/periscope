@@ -234,6 +234,11 @@ class Subsearch(SubtitleDatabase.SubtitleDB):
 				alt_rel_src = newtoken.rsplit(".", 1)[1]
 				alt_rel_season = "S"
 				alt_rel_episode = "E"
+
+				if sum(c.isdigit() for c in alt_rel_number) != len(alt_rel_number):
+					logging.debug("Alternative naming failed. Cannot parse season and episode information.")
+					return []
+
 				if len(re.findall("-", alt_rel_src)) == 0:
 					alt_rels.append(alt_rel_src)
 				else:
